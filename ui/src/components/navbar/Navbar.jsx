@@ -22,16 +22,16 @@ const Navbar = () => {
     id: 1,
     username: "Raveen Minod",
     isSeller: true,
-    img:"https://images.pexels.com/photos/2777898/pexels-photo-2777898.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    img: "https://images.pexels.com/photos/2777898/pexels-photo-2777898.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   };
-
-
 
   return (
     <div className={active ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
-          <span className="text">fiverr</span>
+          <Link to="/" className="link">
+            <span className="text">fiverr</span>
+          </Link>
           <span className="dot">.</span>
         </div>
         <div className="links">
@@ -42,20 +42,27 @@ const Navbar = () => {
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {!currentUser && <button>Join</button>}
           {currentUser && (
-            <div className="user" onClick={()=>{setOpen(!open)}}>
+            <div
+              className="user"
+              onClick={() => {
+                setOpen(!open);
+              }}
+            >
               <img src={currentUser?.img} alt="" />
               <span>{currentUser?.username}</span>
-              {open && <div className="options">
-                {currentUser?.isSeller && (
-                  <>
-                    <span>Gigs</span>
-                    <span>Add New Gig</span>
-                  </>
-                )}
-                <span>Orders</span>
-                <span>Messages</span>
-                <span>Logout</span>
-              </div>}
+              {open && (
+                <div className="options">
+                  {currentUser?.isSeller && (
+                    <>
+                      <Link to="/mygigs" className="link">Gigs</Link>
+                      <Link to="/add" className="link">Add New Gig</Link>
+                    </>
+                  )}
+                  <Link to="/orders" className="link">Orders</Link>
+                  <Link to="/messages" className="link">Messages</Link>
+                  <Link to="/" className="link">Logout</Link>
+                </div>
+              )}
             </div>
           )}
         </div>
