@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.scss";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const { pathname } = useLocation();
 
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -26,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className={active ? "navbar active" : "navbar"}>
+    <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
           <Link to="/" className="link">
@@ -54,26 +56,41 @@ const Navbar = () => {
                 <div className="options">
                   {currentUser?.isSeller && (
                     <>
-                      <Link to="/mygigs" className="link">Gigs</Link>
-                      <Link to="/add" className="link">Add New Gig</Link>
+                      <Link to="/mygigs" className="link">
+                        Gigs
+                      </Link>
+                      <Link to="/add" className="link">
+                        Add New Gig
+                      </Link>
                     </>
                   )}
-                  <Link to="/orders" className="link">Orders</Link>
-                  <Link to="/messages" className="link">Messages</Link>
-                  <Link to="/" className="link">Logout</Link>
+                  <Link to="/orders" className="link">
+                    Orders
+                  </Link>
+                  <Link to="/messages" className="link">
+                    Messages
+                  </Link>
+                  <Link to="/" className="link">
+                    Logout
+                  </Link>
                 </div>
               )}
             </div>
           )}
         </div>
       </div>
-      {active && (
+      {(active || pathname !== "/") && (
         <>
           <hr />
           {/* // menu */}
           <div className="menu">
-            <span className="test">Test</span>
-            <span className="test">Test 2</span>
+            <Link className="link menuLink" to="/">Graphic & Design</Link>
+            <Link className="link menuLink" to="/">Video & Animation</Link>
+            <Link className="link menuLink" to="/">Writing & Translation</Link>
+            <Link className="link menuLink" to="/">AI Service</Link>
+            <Link className="link menuLink" to="/">Digital Marketing</Link>
+            <Link className="link menuLink" to="/">Music & Audio</Link>
+            <Link className="link menuLink" to="/">Programming & Tech</Link>
           </div>
         </>
       )}
