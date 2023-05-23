@@ -92,6 +92,7 @@ const Navbar = () => {
             <Link className="link menuLink" to="/">Music & Audio</Link>
             <Link className="link menuLink" to="/">Programming & Tech</Link>
           </div>
+          <hr />
         </>
       )}
     </div>

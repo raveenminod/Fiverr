@@ -5,6 +5,47 @@
     justify-content: center;
     padding: 80px 0px;
 
+    &.dark {
+      background-color: #0d084d;
+
+      .container {
+        .item {
+          h1 {
+            color: white;
+          }
+
+          p{
+            color: white;
+            margin-bottom: 20px;
+          }
+
+          .title{
+            color: white;
+            font-weight: 300;
+            font-size: 16px;
+            font-weight: 500;
+          }
+
+          button{
+            width: max-content;
+            background-color: #1dbf73;
+            padding: 12px 24px;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+          }
+          
+          img{
+            width: 100%;
+          }
+        }
+      }
+    }
+
     .container {
       width: 1230px;
       display: flex;
@@ -38,12 +79,12 @@
         }
 
         .title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            font-size: 18px;
-            color: #404145;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-weight: 500;
+          font-size: 18px;
+          color: #404145;
 
           img {
             width: 20px;
