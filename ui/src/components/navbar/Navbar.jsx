@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.scss";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, Navigate, useLocation, useNavigate } from "react-router-dom";
+import createRequest from "../../utils/newRequest";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -20,12 +21,20 @@ const Navbar = () => {
     };
   }, []);
 
-  const currentUser = {
-    id: 1,
-    username: "Raveen Minod",
-    isSeller: true,
-    img: "https://images.pexels.com/photos/2777898/pexels-photo-2777898.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  };
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const navigate = useNavigate();
+
+  const handleLogout = async ()=>{
+    try {
+      await createRequest.post("/auth/logout");
+      localStorage.setItem("currentUser", null);
+      navigate("/");
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
@@ -40,9 +49,9 @@ const Navbar = () => {
           <span>Fiverr Business</span>
           <span>Explore</span>
           <span>English</span>
-          <span>Sign in</span>
+          <Link className="link" to="/login">Sign in</Link>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
-          {!currentUser && <button>Join</button>}
+          {!currentUser && <Link to="/register"><button>Join</button></Link>}
           {currentUser && (
             <div
               className="user"
@@ -50,7 +59,7 @@ const Navbar = () => {
                 setOpen(!open);
               }}
             >
-              <img src={currentUser?.img} alt="" />
+              <img src={currentUser?.img || "/img/man.png"} alt="" />
               <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
@@ -70,7 +79,7 @@ const Navbar = () => {
                   <Link to="/messages" className="link">
                     Messages
                   </Link>
-                  <Link to="/" className="link">
+                  <Link onClick={handleLogout} className="link">
                     Logout
                   </Link>
                 </div>
