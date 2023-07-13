@@ -40,7 +40,7 @@ app.use(cookieParser());
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
-app.use("/api/review", reviewRouter);
+app.use("/api/reviews", reviewRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/gigs", gigRouter);

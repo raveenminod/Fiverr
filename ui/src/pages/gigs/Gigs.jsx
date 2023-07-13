@@ -1,6 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./gigs.scss";
-// import { gigs } from "../../data"; dummy data
 import GigCard from "../../components/gigCard/GigCard";
 import { useQuery } from "@tanstack/react-query";
 import createRequest from "../../utils/newRequest";
@@ -12,25 +11,37 @@ const Gigs = () => {
   const minRef = useRef();
   const maxRef = useRef();
 
-  const {search} = useLocation();
+  const { search } = useLocation();
 
-// gigs?cat=&min=10&search=gig 4
-
-  const { isLoading, error, data } = useQuery({
+  // gigs?cat=&min=10&search=gig 4
+  // console.log(minRef.current);
+  
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["gigsData"],
-    queryFn: () => createRequest.get(`/gigs${search}`).then(res=>{
-      return res.data;
-    }),
+    queryFn: () =>
+      createRequest
+        .get(
+          `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort${sort}`
+        )
+        .then((res) => {
+          return res.data;
+        }),
   });
 
-  // console.log(location);
 
   const reSort = (type) => {
     setSort(type);
     setOpen(false);
   };
 
-  // console.log(sort);
+  useEffect(() => {
+    refetch();
+  }, [sort]);
+  
+
+  const apply = ()=>{
+    refetch();
+  }
 
   return (
     <div className="gigs">
@@ -43,9 +54,9 @@ const Gigs = () => {
         <div className="menu">
           <div className="left">
             <span>Budget</span>
-            <input type="text" placeholder="min" />
-            <input type="text" placeholder="max" />
-            <button>Apply</button>
+            <input type="text" ref={minRef} placeholder="min" />
+            <input type="text" ref={maxRef} placeholder="max" />
+            <button onClick={apply}>Apply</button>
           </div>
           <div className="right">
             <span className="sortBy">SortBy</span>
